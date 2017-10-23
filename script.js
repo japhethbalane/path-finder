@@ -102,14 +102,17 @@ function solve(maze, start, goals) {
 				}
 				openeded.push(opened.length);
 				console.log("Opened");
-				console.log(openeded);
+				var o = openeded.reduce((a,b) => a+b, 0);
+				console.log(o);
 				solutions.push(counter);
 				console.log("Solutions");
-				console.log(solutions);
+				var s = solutions.reduce((a,b) => a+b, 0);
+				console.log(s);
 				counter = 0;
 				expanded.push(visited_list.length+1);
 				console.log("Expanded");
-				console.log(expanded);
+				var e = expanded.reduce((a,b) => a+b, 0);
+				console.log(e);
 
 				current = current_goal;
 			}
@@ -135,7 +138,7 @@ function solve(maze, start, goals) {
 			}
 
 		}
-	}, 100);
+	}, 10);
 }
 
 var canvas = document.querySelector('canvas');
@@ -170,7 +173,7 @@ function Block(x, y, val) {
 	this.parent = null;
 
 	this.getFoN = function() {
-		return this.H1 + this.G;
+		return this.H2 + this.G;
 	}
 
 	this.draw = function(current, start, current_goal, visited_list) {
@@ -254,7 +257,9 @@ function getAvailableBorders(maze, node, closed_list) {
 		}
 	}
 	for (var i = 0; i < arr.length; i++) {
-		arr[i].parent = node;
+		if(arr[i].parent == null){
+			arr[i].parent = node;
+		}
 	}
 	// console.log(arr);
 	return arr;
