@@ -49,11 +49,12 @@ function solve(maze, start, goals) {
 	clearCanvas();
 	var current_goal = goals.shift();
 	var current;
+	var counter = 0;
 
 	var open_list = [];
+	var opened = [];
 	var closed_list = [start];
 	var visited_list = [];
-
 	for (var i = 0; i < maze.length; i++) {
 		for (var j = 0; j < maze[i].length; j++) {
 			maze[i][j].H1 = getHuristics1(current_goal, maze[i][j]);
@@ -62,18 +63,19 @@ function solve(maze, start, goals) {
 	}
 
 	current = closed_list.shift();
+	var total_op = 0;
 
-	setInterval(function() {
+	id = setInterval(function() {
 		if (current != current_goal) {
 
 			// code code code
 			visited_list.push(current);
 			open_list.push(...getAvailableBorders(maze, current, visited_list));
+			opened.push(...getAvailableBorders(maze, current, visited_list));
 			var least = getLeastFoN(open_list);
 			closed_list.push(least);
 			current = closed_list.shift();
-
-			
+			console.log(opened);
 			// drawing stuff
 			clearCanvas();
 			for (var i = 0; i < maze.length; i++) {
@@ -83,16 +85,18 @@ function solve(maze, start, goals) {
 			}
 
 			if (current == current_goal) {
+				// console.log("GOAL: "+ current.G)
 				while (current.parent != null) {
+					console.log('here');
 					context.fillStyle = 'green';
 					context.fillRect(50*current.x, 50*current.y, 50, 50);
 					current = current.parent;
+					counter++;
 				}
 				current = current_goal;
 			}
 		} else {
 			if (goals.length > 0) {
-				
 				clearCanvas();
 				current_goal = goals.shift();
 				open_list = [];
@@ -112,8 +116,14 @@ function solve(maze, start, goals) {
 				current = closed_list.shift();
 
 			}
+			if (goals.length == 0){
+				console.log("visited: "+ visited_list.length);
+				console.log(counter+ "steps");
+				console.log('opened: '+ open_list.length)
+				clearInterval(id);
+			}
 		}
-	}, 300);
+	}, 20);
 }
 
 var canvas = document.querySelector('canvas');
@@ -233,6 +243,9 @@ function getAvailableBorders(maze, node, closed_list) {
 	}
 	for (var i = 0; i < arr.length; i++) {
 		arr[i].parent = node;
+		if (arr[i].parent != null) {
+			arr[i].parent = node;
+		}
 	}
 	console.log(arr);
 	return arr;
