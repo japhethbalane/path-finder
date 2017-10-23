@@ -65,7 +65,7 @@ function solve(maze, start, goals) {
 
 	setInterval(function() {
 		if (current != current_goal) {
-
+			start.parent = null;
 			// code code code
 			visited_list.push(current);
 			open_list.push(...getAvailableBorders(maze, current, visited_list));
@@ -82,15 +82,16 @@ function solve(maze, start, goals) {
 				}
 			}
 
+			console.log(start, start.parent);
 			if (current == current_goal) {
-				console.log('');
 				while (current.parent != null) {
-					console.log(current);
+					// console.log(current);
 					context.fillStyle = 'green';
 					context.fillRect(50*current.x, 50*current.y, 50, 50);
 					current = current.parent;
 				}
 				current = current_goal;
+				// console.clear();
 			}
 		} else {
 			if (goals.length > 0) {
