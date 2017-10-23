@@ -50,15 +50,17 @@ function solve(maze, start, goals) {
 	var current_goal = goals.shift();
 	var current;
 	var flog = true;
-	while(goals.length > 1){
-		goals.pop();
-	}
+	// while(goals.length > 5){
+	// 	goals.pop();
+	// }
 
 	var open_list = [];
 	var closed_list = [start];
 	var visited_list = [];
 	var expanded = [];
 	var solutions = [];
+	var opened = [];
+	var openeded = [];
 
 	for (var i = 0; i < maze.length; i++) {
 		for (var j = 0; j < maze[i].length; j++) {
@@ -75,6 +77,7 @@ function solve(maze, start, goals) {
 			// code code code
 			visited_list.push(current);
 			open_list.push(...getAvailableBorders(maze, current, visited_list));
+			opened.push(...getAvailableBorders(maze, current, visited_list));
 			var least = getLeastFoN(open_list);
 			closed_list.push(least);
 			current = closed_list.shift();
@@ -97,15 +100,18 @@ function solve(maze, start, goals) {
 					context.fillRect(50*current.x, 50*current.y, 50, 50);
 					current = current.parent;
 				}
-
+				openeded.push(opened.length);
+				console.log("Opened");
+				console.log(openeded);
 				solutions.push(counter);
 				console.log("Solutions");
 				console.log(solutions);
 				counter = 0;
-				current = current_goal;
 				expanded.push(visited_list.length+1);
 				console.log("Expanded");
 				console.log(expanded);
+
+				current = current_goal;
 			}
 		} else {
 			if (goals.length > 0) {
@@ -115,6 +121,7 @@ function solve(maze, start, goals) {
 				start = current;
 				closed_list = [start];
 				visited_list = [];
+				opened = []
 
 				for (var i = 0; i < maze.length; i++) {
 					for (var j = 0; j < maze[i].length; j++) {
