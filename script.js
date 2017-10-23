@@ -49,10 +49,16 @@ function solve(maze, start, goals) {
 	clearCanvas();
 	var current_goal = goals.shift();
 	var current;
+	var flog = true;
+	while(goals.length > 1){
+		goals.pop();
+	}
 
 	var open_list = [];
 	var closed_list = [start];
 	var visited_list = [];
+	var expanded = [];
+	var solutions = [];
 
 	for (var i = 0; i < maze.length; i++) {
 		for (var j = 0; j < maze[i].length; j++) {
@@ -83,16 +89,26 @@ function solve(maze, start, goals) {
 			}
 
 			if (current == current_goal) {
+				var counter = 0;
+
 				while (current.parent != null) {
+					counter++;
 					context.fillStyle = 'green';
 					context.fillRect(50*current.x, 50*current.y, 50, 50);
 					current = current.parent;
 				}
+
+				solutions.push(counter);
+				console.log("Solutions");
+				console.log(solutions);
+				counter = 0;
 				current = current_goal;
+				expanded.push(visited_list.length+1);
+				console.log("Expanded");
+				console.log(expanded);
 			}
 		} else {
 			if (goals.length > 0) {
-				
 				clearCanvas();
 				current_goal = goals.shift();
 				open_list = [];
@@ -108,12 +124,11 @@ function solve(maze, start, goals) {
 						maze[i][j].H2 = getHuristics2(1, current_goal, maze[i][j]);
 					}
 				}
-
 				current = closed_list.shift();
-
 			}
+
 		}
-	}, 300);
+	}, 100);
 }
 
 var canvas = document.querySelector('canvas');
@@ -234,6 +249,6 @@ function getAvailableBorders(maze, node, closed_list) {
 	for (var i = 0; i < arr.length; i++) {
 		arr[i].parent = node;
 	}
-	console.log(arr);
+	// console.log(arr);
 	return arr;
 }
