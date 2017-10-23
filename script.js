@@ -109,10 +109,7 @@ function solve(maze, start, goals) {
 						maze[i][j].H2 = getHuristics2(1, current_goal, maze[i][j]);
 					}
 				}
-				start.parent = null;
-
 				current = closed_list.shift();
-
 			}
 		}
 	}, 1);
@@ -234,7 +231,7 @@ function getAvailableBorders(maze, node, closed_list) {
 		}
 	}
 	for (var i = 0; i < arr.length; i++) {
-		if (arr[i].parent != null) {
+		if (arr[i].parent == null) {
 			arr[i].parent = node;
 		}
 	}
