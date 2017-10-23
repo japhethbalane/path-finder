@@ -81,6 +81,7 @@ function solve(maze, start, goals) {
 			var least = getLeastFoN(open_list);
 			closed_list.push(least);
 			current = closed_list.shift();
+			console.log(current);
 
 			
 			// drawing stuff
@@ -102,17 +103,17 @@ function solve(maze, start, goals) {
 				}
 				openeded.push(opened.length);
 				console.log("Opened");
-				var o = openeded.reduce((a,b) => a+b, 0);
-				console.log(o);
+				// var o = openeded.reduce((a,b) => a+b, 0);
+				console.log(openeded);
 				solutions.push(counter);
 				console.log("Solutions");
-				var s = solutions.reduce((a,b) => a+b, 0);
-				console.log(s);
+				// var s = solutions.reduce((a,b) => a+b, 0);
+				console.log(solutions);
 				counter = 0;
 				expanded.push(visited_list.length+1);
 				console.log("Expanded");
-				var e = expanded.reduce((a,b) => a+b, 0);
-				console.log(e);
+				// var e = expanded.reduce((a,b) => a+b, 0);
+				console.log(expanded);
 
 				current = current_goal;
 			}
@@ -173,7 +174,7 @@ function Block(x, y, val) {
 	this.parent = null;
 
 	this.getFoN = function() {
-		return this.H2 + this.G;
+		return this.H1 + this.G;
 	}
 
 	this.draw = function(current, start, current_goal, visited_list) {
