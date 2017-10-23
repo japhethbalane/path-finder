@@ -113,7 +113,7 @@ function solve(maze, start, goals) {
 				current = closed_list.shift();
 			}
 		}
-	}, 1);
+	}, 100);
 }
 
 var canvas = document.querySelector('canvas');
