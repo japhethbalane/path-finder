@@ -73,7 +73,7 @@ function solve(maze, start, goals) {
 
 	setInterval(function() {
 		if (current != current_goal) {
-
+			start.parent = null;
 			// code code code
 			visited_list.push(current);
 			open_list.push(...getAvailableBorders(maze, current, visited_list));
